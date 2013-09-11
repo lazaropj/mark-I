@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>Mark I</display-name>
+
+	<!--
+		VRaptor will scan classpath for all @Component and 
+		@Resource inside WEB-INF/classes
+
+		If you want to load them also from WEB-INF/lib/ jars, 
+		you need to specify from which packages they will
+		be loaded, comma separated:
+	-->
+	
+	<!-- 
+	<context-param>
+        	<param-name>br.com.caelum.vraptor.packages</param-name>
+	        <param-value>br.com.caelum.vraptor.blank</param-value>
+    </context-param>
+     -->
+    
+	<!--  
+	   if you are using a servlet 3.0 container 
+		as glassfish 3 or jetty 8, you dont need this
+		filter configuration 
+	-->
+		
+	<!-- <context-param>
+        	<param-name>br.com.caelum.vraptor.provider</param-name>
+	        <param-value>br.com.caelum.vraptor.ioc.guice.GuiceProvider</param-value>
+    </context-param>-->
+		
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<filter-mapping>
+		<filter-name>vraptor</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/applicationContext.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>br.com.caelum.vraptor.encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</context-param>
+	
+	<filter>
+		<filter-name>vraptor</filter-name>
+		<filter-class>br.com.caelum.vraptor.VRaptor</filter-class>
+	</filter>
+	<!-- <filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+ -->
+	<filter-mapping>
+		<filter-name>vraptor</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<!-- <jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.*</url-pattern>
+			<page-encoding>UTF-8</page-encoding>
+			<scripting-invalid>true</scripting-invalid>
+			<include-prelude>/WEB-INF/jsp/prelude.jspf</include-prelude>
+		</jsp-property-group>
+	</jsp-config>
+	 -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
