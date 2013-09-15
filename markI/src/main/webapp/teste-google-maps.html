@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+      #top {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  z-index: 999;
+	  width: 100%;
+	  height: 23px;
+	}
+
+    </style>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAf78YpQTDPoklfb2VuToCLgoGJDIhBzU8&sensor=true&region=BR">
+    </script>
+    <script type="text/javascript" src="/wsouza/jquery-2.0.2.min.js"></script>
+        <script type="text/javascript" src="/wsouza/polygon-estados.js"></script>
+    <script type="text/javascript">
+      
+    var latLongEstados = {
+    		
+    		"AC":{lat:0.0,lng:0.0},
+    		"AL":{lat:0.0,lng:0.0},
+    		"AM":{lat:0.0,lng:0.0},
+    		"AP":{lat:0.0,lng:0.0},
+    		"BA":{lat:0.0,lng:0.0},
+    		"CE":{lat:0.0,lng:0.0},
+    		"DF":{lat:0.0,lng:0.0},
+    		"ES":{lat:0.0,lng:0.0},
+    		"GO":{lat:0.0,lng:0.0},
+    		"MA":{lat:0.0,lng:0.0},
+    		"MG":{lat:0.0,lng:0.0},
+    		"MS":{lat:0.0,lng:0.0},
+    		"MT":{lat:0.0,lng:0.0},
+    		"PA":{lat:0.0,lng:0.0},
+    		"PB":{lat:0.0,lng:0.0},
+    		"PE":{lat:0.0,lng:0.0},
+    		"PI":{lat:0.0,lng:0.0},
+    		"PR":{lat:0.0,lng:0.0},
+    		"RJ":{lat:0.0,lng:0.0},
+    		"RN":{lat:0.0,lng:0.0},
+    		"RO":{lat:0.0,lng:0.0},
+    		"RR":{lat:0.0,lng:0.0},
+    		"RS":{lat:0.0,lng:0.0},
+    		"SC":{lat:0.0,lng:0.0},
+    		"SE":{lat:0.0,lng:0.0},
+    		"SP":{lat:0.0,lng:0.0},
+    		"TO":{lat:0.0,lng:0.0}
+    };
+    
+    var geocoder = new google.maps.Geocoder();
+    var map = null;
+    var ultimoDesenho=null;
+    var ultimoMarcador=null;
+    
+    var mapOptions = {
+            center: new google.maps.LatLng(-25.42, -49.27),
+            zoom: 6,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            streetViewControl: false
+          };
+    
+    function initialize() {
+    	  //cwb lat -25.42    Lon: -49.27
+        
+        map = new google.maps.Map(document.getElementById("map_canvas"),   mapOptions);
+      }
+    
+        
+    function accioEstado(sigla,estado){
+    	//if(estado || estado.trim().length==0) return;
+    	if(ultimoDesenho) ultimoDesenho.setMap(null);
+    	
+    	var coordsArray = polygonEstadosGeom[sigla].split('|');
+    	var desenho = new Array();
+    	
+    	for (var i = 0; i < coordsArray.length; i++) { 
+	    	XY = coordsArray[i].split(','); 
+	    	//points.push( new GLatLng(parseFloat(XY[1]),parseFloat(XY[0]))) ;
+	    	desenho.push(new google.maps.LatLng(parseFloat(XY[1]), parseFloat(XY[0])));
+    	} 
+    	
+    	
+    	bermudaTriangle = new google.maps.Polygon({
+    	    paths: desenho,
+    	    strokeColor: "#000001",
+    	    strokeOpacity: 0.8,
+    	    strokeWeight: 1,
+    	    //fillColor: "#FF0000",
+    	    fillOpacity: 0.15
+    	  });
+    	 bermudaTriangle.setMap(map);
+    	 ultimoDesenho = bermudaTriangle;
+    	 
+    	geocoder.geocode( { 'address': estado}, function(results, status) {
+	    	      if (status == google.maps.GeocoderStatus.OK) {
+	    	        map.setCenter(results[0].geometry.location);
+	    	        if(ultimoMarcador)ultimoMarcador.setMap(null);
+	    	        var marker = new google.maps.Marker({
+	    	            map: map,
+	    	            animation: google.maps.Animation.DROP,
+	    	            position: results[0].geometry.location
+	    	        });
+	    	        google.maps.event.addListener(marker, 'click', function(){
+	    	        	ultimoDesenho.setOptions({fillOpacity:0});
+	    	        	
+	    	        });
+	    	        
+	    	        ultimoMarcador=marker;
+	    	      } else {
+	    	        alert('Geocode was not successful for the following reason: ' + status);
+	    	      }
+	    });
+    	
+    	map.setZoom(mapOptions.zoom);
+    }
+    
+    </script>
+  </head>
+  <body onload="initialize()">
+  <div id="top" style="background-color:black;"> 
+  <label style="color:white"><b>Estado:<b></label>
+  <select id="estados" onchange="accioEstado($(this).val(),$(this).find('option:selected:eq(0)').text().trim())">
+	<option value="AC" selected="selected">Acre </option>
+<option value="AL" >Alagoas </option>
+<option value="AM" >Amazonas </option>
+<option value="AP" >Amapá </option>
+<option value="BA" >Bahia </option>
+<option value="CE" >Ceará </option>
+<option value="DF" >Distrito Federal </option>
+<option value="ES" >Espírito Santo </option>
+<option value="GO" >Goiás </option>
+<option value="MA" >Maranhão </option>
+<option value="MG" >Minas Gerais </option>
+<option value="MS" >Mato Grosso do Sul </option>
+<option value="MT" >Mato Grosso </option>
+<option value="PA" >Pará </option>
+<option value="PB" >Paraíba </option>
+<option value="PE" >Pernambuco </option>
+<option value="PI" >Piauí </option>
+<option value="PR" >Paraná </option>
+<option value="RJ" >Rio de Janeiro </option>
+<option value="RN" >Rio Grande do Norte </option>
+<option value="RO" >Rondônia </option>
+<option value="RR" >Roraima </option>
+<option value="RS" >Rio Grande do Sul </option>
+<option value="SC" >Santa Catarina </option>
+<option value="SE" >Sergipe </option>
+<option value="SP" >São Paulo </option>
+<option value="TO" >Tocantins </option>
+
+  </select>
+  <label style="color:white"><b>Buscar:<b></label> 
+  	
+  	<input type="text" />  
+  
+  </div>
+    <div id="map_canvas" style="width:100%; height:100%"></div>
+  </body>
+</html>
