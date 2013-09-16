@@ -23,35 +23,35 @@
         <script type="text/javascript" src="/wsouza/polygon-estados.js"></script>
     <script type="text/javascript">
       
-    var latLongEstados = {
+    var siglaEstados = {
     		
-    		"AC":{lat:0.0,lng:0.0},
-    		"AL":{lat:0.0,lng:0.0},
-    		"AM":{lat:0.0,lng:0.0},
-    		"AP":{lat:0.0,lng:0.0},
-    		"BA":{lat:0.0,lng:0.0},
-    		"CE":{lat:0.0,lng:0.0},
-    		"DF":{lat:0.0,lng:0.0},
-    		"ES":{lat:0.0,lng:0.0},
-    		"GO":{lat:0.0,lng:0.0},
-    		"MA":{lat:0.0,lng:0.0},
-    		"MG":{lat:0.0,lng:0.0},
-    		"MS":{lat:0.0,lng:0.0},
-    		"MT":{lat:0.0,lng:0.0},
-    		"PA":{lat:0.0,lng:0.0},
-    		"PB":{lat:0.0,lng:0.0},
-    		"PE":{lat:0.0,lng:0.0},
-    		"PI":{lat:0.0,lng:0.0},
-    		"PR":{lat:0.0,lng:0.0},
-    		"RJ":{lat:0.0,lng:0.0},
-    		"RN":{lat:0.0,lng:0.0},
-    		"RO":{lat:0.0,lng:0.0},
-    		"RR":{lat:0.0,lng:0.0},
-    		"RS":{lat:0.0,lng:0.0},
-    		"SC":{lat:0.0,lng:0.0},
-    		"SE":{lat:0.0,lng:0.0},
-    		"SP":{lat:0.0,lng:0.0},
-    		"TO":{lat:0.0,lng:0.0}
+    		"AC":"Acre",
+    		"AL":"Alagoas",
+    		"AM":"Amazonas",
+    		"AP":"Amapa",
+    		"BA":"Bahia",
+    		"CE":"Cear·",
+    		"DF":"Distrito Federal",
+    		"ES":"EspÌrito Santo",
+    		"GO":"Goi·s",
+    		"MA":"Maranh„o",
+    		"MG":"Minas Gerais",
+    		"MS":"Mato Grosso do Sul",
+    		"MT":"Mato Grosso",
+    		"PA":"Par·",
+    		"PB":"ParaÌba",
+    		"PE":"Pernambuco",
+    		"PI":"PiauÌ",
+    		"PR":"Paran·",
+    		"RJ":"Rio de Janeiro",
+    		"RN":"Rio Grande do Norte",
+    		"RO":"RondÙnia",
+    		"RR":"Roraima",
+    		"RS":"Rio Grande do Sul",
+    		"SC":"Santa Catarina",
+    		"SE":"Sergipe",
+    		"SP":"S„o Paulo",
+    		"TO":"Tocantins"
     };
     
     var geocoder = new google.maps.Geocoder();
@@ -73,7 +73,7 @@
       }
     
         
-    function accioEstado(sigla,estado){
+    function accioEstado(sigla){
     	//if(estado || estado.trim().length==0) return;
     	if(ultimoDesenho) ultimoDesenho.setMap(null);
     	
@@ -98,7 +98,9 @@
     	 bermudaTriangle.setMap(map);
     	 ultimoDesenho = bermudaTriangle;
     	 
-    	geocoder.geocode( { 'address': estado}, function(results, status) {
+    	 console.log(siglaEstados[sigla]);
+    	 
+    	geocoder.geocode( { 'address': siglaEstados[sigla]}, function(results, status) {
 	    	      if (status == google.maps.GeocoderStatus.OK) {
 	    	        map.setCenter(results[0].geometry.location);
 	    	        if(ultimoMarcador)ultimoMarcador.setMap(null);
@@ -126,33 +128,33 @@
   <body onload="initialize()">
   <div id="top" style="background-color:black;"> 
   <label style="color:white"><b>Estado:<b></label>
-  <select id="estados" onchange="accioEstado($(this).val(),$(this).find('option:selected:eq(0)').text().trim())">
+  <select id="estados" onchange="accioEstado($(this).val())">
 	<option value="AC" selected="selected">Acre </option>
 <option value="AL" >Alagoas </option>
 <option value="AM" >Amazonas </option>
-<option value="AP" >Amap√° </option>
+<option value="AP" >Amap&aacute; </option>
 <option value="BA" >Bahia </option>
-<option value="CE" >Cear√° </option>
+<option value="CE" >Cear&aacute; </option>
 <option value="DF" >Distrito Federal </option>
-<option value="ES" >Esp√≠rito Santo </option>
-<option value="GO" >Goi√°s </option>
-<option value="MA" >Maranh√£o </option>
+<option value="ES" >Esp&iacute;rito Santo </option>
+<option value="GO" >Goi&aacute;s </option>
+<option value="MA" >Maranh&atilde;o </option>
 <option value="MG" >Minas Gerais </option>
 <option value="MS" >Mato Grosso do Sul </option>
 <option value="MT" >Mato Grosso </option>
-<option value="PA" >Par√° </option>
-<option value="PB" >Para√≠ba </option>
+<option value="PA" >Par&aacute; </option>
+<option value="PB" >Para&iacute;ba </option>
 <option value="PE" >Pernambuco </option>
-<option value="PI" >Piau√≠ </option>
-<option value="PR" >Paran√° </option>
+<option value="PI" >Piau&iacute; </option>
+<option value="PR" >Paran&aacute; </option>
 <option value="RJ" >Rio de Janeiro </option>
 <option value="RN" >Rio Grande do Norte </option>
-<option value="RO" >Rond√¥nia </option>
+<option value="RO" >Rond&ocirc;nia </option>
 <option value="RR" >Roraima </option>
 <option value="RS" >Rio Grande do Sul </option>
 <option value="SC" >Santa Catarina </option>
 <option value="SE" >Sergipe </option>
-<option value="SP" >S√£o Paulo </option>
+<option value="SP" >S&atilde;o Paulo </option>
 <option value="TO" >Tocantins </option>
 
   </select>
