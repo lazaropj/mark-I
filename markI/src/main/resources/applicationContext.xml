@@ -23,7 +23,7 @@
 		
 	<util:properties id="queries" location="classpath:/query.properties" /> -->
 	
-	<!-- <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" /> -->
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 		
 	<!-- <bean class="com.ancientprogramming.fixedformat4j.format.impl.FixedFormatManagerImpl"/> -->
 
@@ -32,15 +32,16 @@
 	
 	<jee:jndi-lookup  id="couchDbProperties" jndi-name="java:comp/env/couchDbProperties" />
  -->
-	<!-- <task:annotation-driven /> -->
+	<task:annotation-driven />
 
- <!-- <context:property-placeholder location="classpath:db.properties"/>
+ <!-- <context:property-placeholder location="classpath:db.properties"/> -->
  
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
-    <property name="driverClassName" value="org.postgresql.Driver"/>
-    <property name="url" value="jdbc:postgresql://localhost:5432/cloud-clinics"/>
-    <property name="username" value="postgres"/>
-    <property name="password" value="root"/> -->
+	    <property name="driverClassName" value="org.gjt.mm.mysql.Driver"/>
+	    <property name="url" value="jdbc:mysql://localhost:3306/marki"/>
+	    <property name="username" value="root"/>
+	    <property name="password" value="root"/> 
+    </bean>
     
     
     <!-- 
@@ -52,32 +53,32 @@ password=root
      
   </bean>
   -->
-	<!-- <bean id="sessionFactory"
+	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="br.com.frontbase.model" />
+		<property name="packagesToScan" value="br.com.markI.model" />
 		
 		
 		<property name="hibernateProperties">
 			<props>			
-				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>
 				<prop key="hibernate.jdbc.batch_size">100</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				
-				CONNECTION
+				<!-- CONNECTION -->
 				
 				<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
 				<prop key="hibernate.connection.zeroDateTimeBehavior">convertToNull</prop>
 				
-				CACHE
+				<!-- CACHE -->
 				
 				<prop key="hibernate.cache.use_second_level_cache">true</prop>
 				<prop key="hibernate.cache.use_query_cache">true</prop>
 				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
 
-				c3p0
+				<!-- c3p0 -->
 				
 				<prop key="hibernate.c3p0.max_size">10</prop>
 			    <prop key="hibernate.c3p0.min_size">2</prop>
@@ -91,16 +92,12 @@ password=root
 			</props>
 		</property>
 		
-		<property name="entityInterceptor">
-    		<ref local="interceptor" />
-  		</property>
-	</bean>
- -->
-<!-- 
+		</bean>
+	
 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
-	<tx:annotation-driven transaction-manager="transactionManager" /> -->
+	<tx:annotation-driven transaction-manager="transactionManager" /> 
 
 </beans>

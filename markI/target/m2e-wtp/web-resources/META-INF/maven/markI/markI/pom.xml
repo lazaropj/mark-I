@@ -1,38 +1,83 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>markI</groupId>
-  <artifactId>markI</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-  <name>markI</name>
-  	<dependencies>
-	  <dependency>
-				<groupId>jstl</groupId>
-				<artifactId>jstl</artifactId>
-				<version>1.2</version>
-			</dependency>
-			
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-tools</artifactId>
-				<version>3.2.4.GA</version>
-			</dependency>
-	            
-			            
-		            
-			<dependency>
-				<groupId>br.com.caelum</groupId>
-				<artifactId>vraptor</artifactId>
-				<version>3.5.1</version>
-			</dependency>
-			
-			      
-        <dependency>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>markI</groupId>
+	<artifactId>markI</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>markI</name>
+	<dependencies>
+	<dependency>
+			<groupId>markI</groupId>
+			<artifactId>markI-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	
+	<dependency>
+			<groupId>markI</groupId>
+			<artifactId>markI-repositories</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	
+	<dependency>
+			<groupId>markI</groupId>
+			<artifactId>markI-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+				
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.2.5.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-tools</artifactId>
+			<version>3.2.4.GA</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.26</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>3.2.3.RELEASE</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>br.com.caelum</groupId>
+			<artifactId>vraptor</artifactId>
+			<version>3.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>20030825.184428</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ancientprogramming.fixedformat4j</groupId>
+			<artifactId>fixedformat4j</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+
+
+		<dependency>
 			<groupId>commons-pool</groupId>
 			<artifactId>commons-pool</artifactId>
 			<version>20030825.183949</version>
 		</dependency>
-		                       
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -53,7 +98,7 @@
 			<artifactId>hibernate-ehcache</artifactId>
 			<version>4.2.1.Final</version>
 		</dependency>
-		            
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
@@ -69,7 +114,7 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>3.2.3.RELEASE</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
@@ -100,6 +145,10 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.5.3</version>
 		</dependency>
-			
-  	</dependencies>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.4</version>
+		</dependency>
+	</dependencies>
 </project>
