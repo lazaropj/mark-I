@@ -41,8 +41,11 @@
     </script>
   </head>
   <body onload="initialize()">
-  <div id="top" style="background-color:black;"> 
-  <label style="color:white"><b>Estado:<b></label>
+  <div id="top" style="background-color:black;">
+    <a id="anosOcorrenciaLink" style="color:white" href="javascript:void(0)"  > <label style="color:white"><b>Anos de ocorr&ecirc;ncia<b></label>  </a>
+  
+  <label style="color:white"><b> | </b></label>  
+  <label style="color:white"><b>Estado:</b></label>
   <select id="estados" onchange="accioEstado($(this).val())">
   <option value="" selected="selected">--Selecione</option>
 	<option value="AC" >Acre </option>
@@ -74,6 +77,7 @@
 <option value="TO" >Tocantins </option>
 
   </select>
+
   <label style="color:white"><b>Rota:<b></label> 
   	
   	<input type="text" id="de" />  
@@ -93,7 +97,7 @@
     <div id="map_canvas" style="width:100%; height:100%"></div>
     
      <div id="statusDiv" style="background-color:black;">
-        <a id="anosOcorrenciaLink" style="color:white" href="javascript:void(0)"> <label style="color:white"><b>Anos de ocorr&ecirc;ncia<b></label>  </a>
+        
     </div>
 
 
