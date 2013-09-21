@@ -56,7 +56,7 @@
         });*/
         
         $('#anosOcorrenciaLink').tooltip({
-        	position: "top",
+        	position: "bottom",
             content: $("#anoCheckedDiv").html(),
             showEvent: 'click',
             /*onUpdate: function(content){
