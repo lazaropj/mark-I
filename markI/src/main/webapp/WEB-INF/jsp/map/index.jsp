@@ -97,9 +97,9 @@
     </div>
 
 
-<div style="display:none" id="anoCheckedDiv">
-	<c:forEach var="ano" items="${anosOcorrencia}">
-	 <span><input type="checkbox" class="anoCheck" onchange="checkAno(this)" value="${ano}"/>  ${ano} </span><br/>
+<div style="display:none; " id="anoCheckedDiv">
+	<c:forEach var="ano" begin="2007" end="2012">
+	 <span style="background-color:#ecd084"><input type="checkbox"  checked="checked" class="anoCheck" onchange="checkAno(this)" value="${ano}"/>  ${ano} </span><br/>
 	</c:forEach>
 	
 	

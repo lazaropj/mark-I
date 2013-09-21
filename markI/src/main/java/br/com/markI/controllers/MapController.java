@@ -1,9 +1,5 @@
 package br.com.markI.controllers;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.caelum.vraptor.Get;
@@ -23,7 +19,7 @@ public class MapController extends BaseController {
 	public void index() {
 		super.index();
 		
-		this.result.include("anosOcorrencia",this.ocorrenciaService.obterAnosDeOcorrencia());
+		//this.result.include("anosOcorrencia",this.ocorrenciaService.obterAnosDeOcorrencia());
 		
 	}
 	
