@@ -51,8 +51,43 @@
         map = new google.maps.Map(document.getElementById("map_canvas"),   mapOptions);
         geolocateUser();
     
-     
+        /*$('#anosOcorrenciaLink').tooltip({
+            position: "top"
+        });*/
+        
+        $('#anosOcorrenciaLink').tooltip({
+        	position: "top",
+            content: $("#anoCheckedDiv").html(),
+            showEvent: 'click',
+            /*onUpdate: function(content){
+                content.panel({
+                    width: 200,
+                    border: false,
+                    title: 'Login',
+                    href: '_dialog.html'
+                });
+            },*/
+            onShow: function(){
+                var t = $(this);
+                t.tooltip('tip').unbind().bind('mouseenter', function(){
+                    t.tooltip('show');
+                }).bind('mouseleave', function(){
+                    t.tooltip('hide');
+                });
+            }
+        });
+        
       }
+    
+    function checkAno(check){
+    	
+    	if($(check).is(":checked")){
+    		$(check).parent().css("background-color","#ecd084");
+    	}else{
+    		$(check).parent().css("background-color","white");
+    	}
+    	
+    }
     
     function geolocationError(positionError) {
        // document.getElementById("error").innerHTML += "Error: " + positionError.message + "<br />";
