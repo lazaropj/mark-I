@@ -37,12 +37,22 @@
     <script type="text/javascript" src="/js/jquery-easyui-1.3.4/jquery.easyui.min.js"></script>
     <script type="text/javascript">
       
-   var anosOcorrencia = ${anosOcorrencia};
+   //var anosOcorrencia = ${anosOcorrencia};
+  	var contextPath = "${pageContext.request.contextPath}";
     </script>
   </head>
   <body onload="initialize()">
+            
+            
   <div id="top" style="background-color:black;">
-    <a id="anosOcorrenciaLink" style="color:white" href="javascript:void(0)"  > <label style="color:white"><b>Anos de ocorr&ecirc;ncia<b></label>  </a>
+  <label style="color:white"><b>Ano:</b></label>
+            <select id="anosDisponiveis" class="easyui-combobox" name="state" style="width:200px;" data-options="multiple:true, panelHeight:'auto'">
+            <c:forEach var="ano" begin="2007" end="2012">
+		        <option value="${ano}">${ano}</option>
+            </c:forEach>
+        
+    		</select>
+ <!--    <a id="anosOcorrenciaLink" style="color:white" href="javascript:void(0)"  > <label style="color:white"><b>Anos de ocorr&ecirc;ncia<b></label>  </a> -->
   
   <label style="color:white"><b> | </b></label>  
   <label style="color:white"><b>Estado:</b></label>
@@ -89,10 +99,10 @@
   	<input type="button" value="Buscar" onclick="accioRota()"/>
   
   </div>
- 	<div class="demo-info">
+ 	<!-- <div class="demo-info">
         <div class="demo-tip icon-tip"></div>
         <div>Hover the links to display tooltip message.</div>
-    </div>    
+    </div> -->    
     
     <div id="map_canvas" style="width:100%; height:100%"></div>
     

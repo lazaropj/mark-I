@@ -1,4 +1,8 @@
-	var geocoder = new google.maps.Geocoder();
+var intervalGeolocationSearch = null;
+var municipioArray = null;
+var municipiosSemPosicao = new Array();
+
+var geocoder = new google.maps.Geocoder();
 	var map = null;
 	var ultimoDesenho=null;
 	var ultimoMarcador=null;
@@ -14,27 +18,27 @@
     		"AM":"Amazonas",
     		"AP":"Amapa",
     		"BA":"Bahia",
-    		"CE":"Ceará",
+    		"CE":"Ceara",
     		"DF":"Distrito Federal",
     		"ES":"Espírito Santo",
-    		"GO":"Goiás",
-    		"MA":"Maranhão",
+    		"GO":"Goias",
+    		"MA":"Maranhao",
     		"MG":"Minas Gerais",
     		"MS":"Mato Grosso do Sul",
     		"MT":"Mato Grosso",
-    		"PA":"Pará",
-    		"PB":"Paraíba",
+    		"PA":"Para",
+    		"PB":"Paraiba",
     		"PE":"Pernambuco",
-    		"PI":"Piauí",
-    		"PR":"Paraná",
+    		"PI":"Piaui",
+    		"PR":"Parana",
     		"RJ":"Rio de Janeiro",
     		"RN":"Rio Grande do Norte",
-    		"RO":"Rondônia",
+    		"RO":"Rondonia",
     		"RR":"Roraima",
     		"RS":"Rio Grande do Sul",
     		"SC":"Santa Catarina",
     		"SE":"Sergipe",
-    		"SP":"São Paulo",
+    		"SP":"Sao Paulo",
     		"TO":"Tocantins"
     };
     
@@ -55,18 +59,10 @@
             position: "top"
         });*/
         
-        $('#anosOcorrenciaLink').tooltip({
+        /*$('#anosOcorrenciaLink').tooltip({
         	position: "bottom",
             content: $("#anoCheckedDiv").html(),
             showEvent: 'click',
-            /*onUpdate: function(content){
-                content.panel({
-                    width: 200,
-                    border: false,
-                    title: 'Login',
-                    href: '_dialog.html'
-                });
-            },*/
             onShow: function(){
                 var t = $(this);
                 t.tooltip('tip').unbind().bind('mouseenter', function(){
@@ -75,7 +71,7 @@
                     t.tooltip('hide');
                 });
             }
-        });
+        });*/
         
       }
     
@@ -147,6 +143,8 @@
         mapObject.fitBounds(circle.getBounds()); */
       }
     
+    var municipiosPesquisados = Array();
+    
     function accioEstado(sigla){
     	
     	if(dirRenderer!=null) {dirRenderer.setMap(null); dirRenderer=null;}
@@ -163,14 +161,13 @@
 	    	desenho.push(new google.maps.LatLng(parseFloat(XY[1]), parseFloat(XY[0])));
     	} 
     	
-    	bermudaTriangle = new google.maps.Polygon({
-    	    paths: desenho,
-    	    strokeColor: "#000001",
-    	    strokeOpacity: 0.8,
-    	    strokeWeight: 1,
-    	    //fillColor: "#FF0000",
-    	    fillOpacity: 0.15
+    	bermudaTriangle = new google.maps.Polyline({
+    	    path: desenho,
+    	    strokeColor: "#FF0000",
+    	    strokeOpacity: 1.0,
+    	    strokeWeight: 2
     	  });
+    	
     	 bermudaTriangle.setMap(map);
     	 ultimoDesenho = bermudaTriangle;
     	 
@@ -179,10 +176,10 @@
     	geocoder.geocode( { 'address': siglaEstados[sigla]}, function(results, status) {
 	    	      if (status == google.maps.GeocoderStatus.OK) {
 	    	        map.setCenter(results[0].geometry.location);
-	    	        console.log(results[0].geometry.location);
+	    	        //console.log(results[0].geometry.location);
 	    	        
 	    	        if(ultimoMarcador)ultimoMarcador.setMap(null);
-	    	        
+	    	       /* 
 	    	        var marker = new google.maps.Marker({
 	    	            map: map,
 	    	            animation: google.maps.Animation.DROP,
@@ -191,9 +188,56 @@
 	    	        google.maps.event.addListener(marker, 'click', function(){
 	    	        	ultimoDesenho.setOptions({fillOpacity:0});
 	    	        	
-	    	        });
+	    	        });*/
+	    	        console.log(sigla);
+	    	        $.post( contextPath +"/ocorrencias/municipios.json",{"sigla":sigla}, function( data ) {
+	    	        	console.log(data.length);
+	    	        	if(data && data.length>0){
+	    	        		
+	    	        		if(municipiosPesquisados && municipiosPesquisados.length>0){
+	    	        			$.each(municipiosPesquisados,function(idx,marker){
+	    	        				marker.setMap(null);
+	    	        			});
+	    	        			municipiosPesquisados = new Array();
+	    	        		}
+//	    	        		loadMunicipioMarker(data);
+	    	        		municipioArray=data;
+	    	        		$.each(data,function(idx,municipio){
+	    	        			if((municipio.latitude==null || municipio.longitude==null)){
+	    	        				municipiosSemPosicao.push(municipio);
+	    	        			}
+	    	        			municipiosPesquisados.push(new google.maps.Marker({
+	        						map: map,
+	        						position: new google.maps.LatLng(municipio.latitude, municipio.longitude)
+	        					}));
+	    	        		});
+	    	        		
+	    	        		//console.log(sigla);
+	    	        		//intervalGeolocationSearch=setInterval(loadMunicipioMarker,10000);
+//	    	        		$.each(data,function(idx,municipio){
+	    	        			
+	    	        			
+	    	        			
+	    	        		/*	geocoder.geocode( { 'address': municipio.nome+"- "+sigla}, function(results, status) {
+	    	        				if (status == google.maps.GeocoderStatus.OK) {
+	    	        					
+	    	        					municipiosPesquisados.push(new google.maps.Marker({
+	    	        						map: map,
+	    	        						position: results[0].geometry.location
+	    	        					}));
+	    	        					
+	    	        				}
+	    	        			});*/
+	    	        			
+	    	        			
+	    	        			
+//	    	        		});
+	    	        		
+	    	        		}
+	    	        	
+	    	        	},"json");
 	    	        
-	    	        ultimoMarcador=marker;
+//	    	        ultimoMarcador=marker;
 	    	      } else {
 	    	        alert('Geocode was not successful for the following reason: ' + status);
 	    	      }
@@ -202,6 +246,30 @@
     	map.setZoom(mapOptions.zoom);
     }
     
+    var t = null;
+    function loadMunicipioMarker(){
+    	if(municipioArray.length==0){ window.clearInterval(intervalGeolocationSearch); return; }
+    	
+    	municipio = municipioArray.shift();
+    	
+    	console.log(municipio.nome+" - "+$("#estados").val());
+    	
+    	geocoder.geocode( { 'address': municipio.nome+" - "+$("#estados").val()}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				console.log("id="+municipio.id+",longitude="+results[0].geometry.location.lng()+",latitude="+results[0].geometry.location.lat());
+				t = results[0].geometry.location;
+				municipiosPesquisados.push(new google.maps.Marker({
+					map: map,
+					position: results[0].geometry.location
+				}));
+				
+				loadMunicipioMarker();
+			}else{
+				municipioArray.unshift(municipio);
+			}
+		});
+    	
+    }
     
     function accioRota(){
     	//buscando cidade "de"
