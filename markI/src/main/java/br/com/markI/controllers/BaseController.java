@@ -1,5 +1,7 @@
 package br.com.markI.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.view.Results;
 
 
 public class BaseController {
@@ -27,17 +30,18 @@ public class BaseController {
 	@Autowired
 	protected HttpServletResponse httpResponse;
 	
+	protected void  setListResult(List list){
+		
+		this.result.use(Results.json()).withoutRoot().from(list).recursive().serialize();
+		
+	}
+	
 	/*protected void  setGridListResult(List list){
 		
 		this.result.use(Results.json()).withoutRoot().from(new GridListResult(list)).recursive().serialize();
 		
 	}
 	
-	protected void  setListResult(List list){
-		
-		this.result.use(Results.json()).withoutRoot().from(list).recursive().serialize();
-		
-	}
 	
 	protected void  setGridListResult(GridListResult glr){
 		

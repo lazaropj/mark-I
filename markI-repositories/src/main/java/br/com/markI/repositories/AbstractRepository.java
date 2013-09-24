@@ -82,7 +82,7 @@ public abstract class AbstractRepository {
 		
 		Query q = null;
 		if(sql.toLowerCase().contains("--sql")){
-			q = getSession().createSQLQuery(sql.toLowerCase().replaceAll("--sql", ""));
+			q = getSession().createSQLQuery(sql.replaceAll("--sql", "").replaceAll("--SQL", ""));
 		}else {
 			q = getSession().createQuery(sql);
 		}
@@ -103,10 +103,14 @@ public abstract class AbstractRepository {
 		}*/
 
 		if(param!=null){
-			/*for(String key : param.keySet()){
-				q.setParameter(key, param.get(key));
-			}*/
-			q.setProperties(param);
+			for(String key : param.keySet()){
+				if(param.get(key) instanceof Object[] || param.get(key) instanceof List){
+					q.setParameterList(key, (Object[])param.get(key));
+				}else{
+					q.setParameter(key, param.get(key));
+					
+				}
+			}
 		}
 		
 		if(clazz!=null){
